@@ -332,6 +332,8 @@ export interface IPlatformSettings {
     lite_plan_quota: number;
     pro_plan_price: number;
     commission_rate_default: number;
+    commission_promo_rate?: number;
+    commission_promo_expires_at?: string; // ISO Date string
     updated_at: string;
 }
 

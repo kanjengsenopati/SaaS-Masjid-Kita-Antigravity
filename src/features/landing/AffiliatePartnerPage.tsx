@@ -12,6 +12,8 @@ import {
     ChevronRight,
     Award
 } from 'lucide-react';
+import { db } from '../../lib/db';
+import type { IPlatformSettings } from '../../types';
 import { AffiliateRegistrationForm } from './AffiliateRegistrationForm';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -52,12 +54,29 @@ const FAQItem: React.FC<{ question: string; answer: string }> = ({ question, ans
 
 export const AffiliatePartnerPage: React.FC = () => {
     const navigate = useNavigate();
+    const [settings, setSettings] = React.useState<IPlatformSettings | null>(null);
+
+    React.useEffect(() => {
+        const loadSettings = async () => {
+            const platformSettings = await db.platform_settings.toCollection().first();
+            setSettings(platformSettings || null);
+        };
+        loadSettings();
+    }, []);
+
+    let displayRate = settings?.commission_rate_default || 10; // Default
+    let isPromo = false;
+
+    if (settings?.commission_promo_rate && settings?.commission_promo_expires_at && new Date(settings.commission_promo_expires_at) > new Date()) {
+        displayRate = settings.commission_promo_rate;
+        isPromo = true;
+    }
 
     const benefits = [
         {
             icon: <TrendingUp className="text-emerald-500" size={32} />,
-            title: "Komisi 25% Recurring",
-            desc: "Dapatkan bagi hasil 25% dari setiap biaya langganan yang dibayarkan oleh masjid referal Anda, berlaku selamanya selama mereka aktif."
+            title: `Komisi ${displayRate}% Recurring`,
+            desc: `Dapatkan bagi hasil ${displayRate}% dari setiap biaya langganan yang dibayarkan oleh masjid referal Anda, berlaku selamanya selama mereka aktif.`
         },
         {
             icon: <Wallet className="text-blue-500" size={32} />,
@@ -91,7 +110,7 @@ export const AffiliatePartnerPage: React.FC = () => {
         },
         {
             question: "Apakah komisi berlaku untuk perpanjangan langganan?",
-            answer: "Ya! Ini adalah komisi recurring. Selama masjid tersebut memperpanjang langganannya (bulanan atau tahunan), Anda akan terus menerima komisi 25% setiap kali mereka membayar."
+            answer: `Ya! Ini adalah komisi recurring. Selama masjid tersebut memperpanjang langganannya (bulanan atau tahunan), Anda akan terus menerima komisi ${displayRate}% setiap kali mereka membayar.`
         },
         {
             question: "Bagaimana jika masjid tersebut butuh bantuan teknis?",
@@ -138,7 +157,7 @@ export const AffiliatePartnerPage: React.FC = () => {
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500 inline-block">Dapatkan Manfaat Berkelanjutan</span>
                         </h1>
                         <p className="text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-medium">
-                            Jadilah bagian dari revolusi digital manajemen masjid. Bantu masjid di sekitar Anda menjadi lebih profesional dan nikmati bagi hasil <strong>25% Komisi</strong> dari setiap pembayaran referal Anda.
+                            Jadilah bagian dari revolusi digital manajemen masjid. Bantu masjid di sekitar Anda menjadi lebih profesional dan nikmati bagi hasil <strong>{displayRate}% Komisi</strong> dari setiap pembayaran referal Anda. {isPromo && <span className="text-emerald-500 font-bold ml-1 animate-pulse">(Promo Terbatas!)</span>}
                         </p>
                         <div className="pt-4">
                             <a

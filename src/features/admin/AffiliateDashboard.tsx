@@ -21,7 +21,7 @@ import { formatCurrencyRp } from '../../utils/formatters';
 export const AffiliateDashboard: React.FC = () => {
     const { logActivity } = useSystemAudit();
 
-    const [activeTab, setActiveTab] = useState<'PARTNERS' | 'WITHDRAWALS' | 'COMMISSIONS'>('PARTNERS');
+    const [activeTab, setActiveTab] = useState<'PARTNERS' | 'WITHDRAWALS' | 'COMMISSIONS' | 'SETTINGS'>('PARTNERS');
     const [affiliates, setAffiliates] = useState<IAffiliate[]>([]);
     const [commissions, setCommissions] = useState<ICommission[]>([]);
     const [withdrawals, setWithdrawals] = useState<IAffiliateWithdrawal[]>([]);
@@ -141,37 +141,45 @@ export const AffiliateDashboard: React.FC = () => {
                 )}
 
                 {/* Main Stats Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div className="bg-white dark:bg-slate-900 p-8 rounded-[32px] border border-slate-100 dark:border-slate-800 shadow-sm transition-all hover:shadow-md">
-                        <div className="w-12 h-12 bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl flex items-center justify-center mb-4 text-emerald-600">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm transition-all hover:shadow-md flex items-center gap-4">
+                        <div className="w-12 h-12 bg-emerald-50 dark:bg-emerald-900/20 rounded-xl flex items-center justify-center shrink-0 text-emerald-600">
                             <TrendingUp size={24} />
                         </div>
-                        <div className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Total Komisi Terbit</div>
-                        <div className="text-2xl font-black text-slate-900 dark:text-white">{formatCurrencyRp(totalCommissions)}</div>
+                        <div>
+                            <div className="text-[10px] font-black uppercase tracking-wider text-slate-400">Total Komisi Terbit</div>
+                            <div className="text-xl font-black text-slate-900 dark:text-white mt-0.5">{formatCurrencyRp(totalCommissions)}</div>
+                        </div>
                     </div>
 
-                    <div className="bg-white dark:bg-slate-900 p-8 rounded-[32px] border border-slate-100 dark:border-slate-800 shadow-sm transition-all hover:shadow-md">
-                        <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/20 rounded-2xl flex items-center justify-center mb-4 text-blue-600">
+                    <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm transition-all hover:shadow-md flex items-center gap-4">
+                        <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/20 rounded-xl flex items-center justify-center shrink-0 text-blue-600">
                             <CheckCircle2 size={24} />
                         </div>
-                        <div className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Total Komisi Dibayar</div>
-                        <div className="text-2xl font-black text-slate-900 dark:text-white">{formatCurrencyRp(totalPaidCommissions)}</div>
+                        <div>
+                            <div className="text-[10px] font-black uppercase tracking-wider text-slate-400">Total Komisi Dibayar</div>
+                            <div className="text-xl font-black text-slate-900 dark:text-white mt-0.5">{formatCurrencyRp(totalPaidCommissions)}</div>
+                        </div>
                     </div>
 
-                    <div className="bg-white dark:bg-slate-900 p-8 rounded-[32px] border border-slate-100 dark:border-slate-800 shadow-sm transition-all hover:shadow-md border-amber-200 dark:border-amber-900/30">
-                        <div className="w-12 h-12 bg-amber-50 dark:bg-amber-900/20 rounded-2xl flex items-center justify-center mb-4 text-amber-600">
+                    <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm transition-all hover:shadow-md border-amber-200 dark:border-amber-900/30 flex items-center gap-4">
+                        <div className="w-12 h-12 bg-amber-50 dark:bg-amber-900/20 rounded-xl flex items-center justify-center shrink-0 text-amber-600">
                             <Wallet size={24} />
                         </div>
-                        <div className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Antrean Penarikan</div>
-                        <div className="text-2xl font-black text-amber-600">{formatCurrencyRp(pendingWithdrawals)}</div>
+                        <div>
+                            <div className="text-[10px] font-black uppercase tracking-wider text-slate-400">Antrean Penarikan</div>
+                            <div className="text-xl font-black text-amber-600 mt-0.5">{formatCurrencyRp(pendingWithdrawals)}</div>
+                        </div>
                     </div>
 
-                    <div className="bg-white dark:bg-slate-900 p-8 rounded-[32px] border border-slate-100 dark:border-slate-800 shadow-sm transition-all hover:shadow-md">
-                        <div className="w-12 h-12 bg-purple-50 dark:bg-purple-900/20 rounded-2xl flex items-center justify-center mb-4 text-purple-600">
+                    <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm transition-all hover:shadow-md flex items-center gap-4">
+                        <div className="w-12 h-12 bg-purple-50 dark:bg-purple-900/20 rounded-xl flex items-center justify-center shrink-0 text-purple-600">
                             <Users size={24} />
                         </div>
-                        <div className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Total Mitra Aktif</div>
-                        <div className="text-2xl font-black text-slate-900 dark:text-white">{affiliates.filter(a => a.status === 'ACTIVE').length} Partner</div>
+                        <div>
+                            <div className="text-[10px] font-black uppercase tracking-wider text-slate-400">Total Mitra Aktif</div>
+                            <div className="text-xl font-black text-slate-900 dark:text-white mt-0.5">{affiliates.filter(a => a.status === 'ACTIVE').length} Partner</div>
+                        </div>
                     </div>
                 </div>
 
@@ -195,6 +203,12 @@ export const AffiliateDashboard: React.FC = () => {
                             className={`px-6 py-2.5 rounded-xl text-sm font-black transition-all ${activeTab === 'COMMISSIONS' ? 'bg-white dark:bg-slate-700 shadow-sm text-blue-600 dark:text-blue-400' : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'}`}
                         >
                             <History size={16} className="inline mr-2" /> Riwayat Komisi
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('SETTINGS')}
+                            className={`px-6 py-2.5 rounded-xl text-sm font-black transition-all ${activeTab === 'SETTINGS' ? 'bg-white dark:bg-slate-700 shadow-sm text-indigo-600 dark:text-indigo-400' : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'}`}
+                        >
+                            <TrendingUp size={16} className="inline mr-2" /> Pengaturan Komisi
                         </button>
                     </div>
 
@@ -405,8 +419,85 @@ export const AffiliateDashboard: React.FC = () => {
                             </div>
                         </div>
                     )}
+
+                    {activeTab === 'SETTINGS' && (
+                        <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 p-8">
+                            <div className="max-w-2xl space-y-8">
+                                <div>
+                                    <h3 className="text-xl font-black text-slate-900 dark:text-white">Pengaturan Global Afiliasi</h3>
+                                    <p className="text-slate-500 text-sm font-medium mt-1">Konfigurasi persentase bagi hasil dan promo yang berlaku untuk semua mitra.</p>
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 px-1">Komisi Default (%)</label>
+                                        <div className="relative">
+                                            <input
+                                                type="number"
+                                                className="w-full px-5 py-4 bg-slate-50 dark:bg-slate-800 rounded-2xl border-none focus:ring-2 focus:ring-emerald-500 font-black text-lg"
+                                                value={platformSettings?.commission_rate_default || 0}
+                                                onChange={(e) => setPlatformSettings(prev => prev ? { ...prev, commission_rate_default: Number(e.target.value) } : null)}
+                                            />
+                                            <div className="absolute right-5 top-1/2 -translate-y-1/2 font-black text-slate-400">%</div>
+                                        </div>
+                                        <p className="text-[10px] text-slate-400 px-1 italic">Diterapkan jika tidak ada promo aktif atau rate khusus mitra.</p>
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-black uppercase tracking-widest text-indigo-500 px-1 font-black">Komisi Promo (%)</label>
+                                        <div className="relative">
+                                            <input
+                                                type="number"
+                                                className="w-full px-5 py-4 bg-indigo-50 dark:bg-indigo-900/10 rounded-2xl border-none focus:ring-2 focus:ring-indigo-500 font-black text-lg text-indigo-700 dark:text-indigo-400"
+                                                value={platformSettings?.commission_promo_rate || 0}
+                                                onChange={(e) => setPlatformSettings(prev => prev ? { ...prev, commission_promo_rate: Number(e.target.value) } : null)}
+                                            />
+                                            <div className="absolute right-5 top-1/2 -translate-y-1/2 font-black text-indigo-400">%</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 px-1">Masa Berlaku Promo</label>
+                                    <input
+                                        type="date"
+                                        className="w-full px-5 py-4 bg-slate-50 dark:bg-slate-800 rounded-2xl border-none focus:ring-2 focus:ring-emerald-500 font-bold text-sm"
+                                        value={platformSettings?.commission_promo_expires_at?.split('T')[0] || ''}
+                                        onChange={(e) => setPlatformSettings(prev => prev ? { ...prev, commission_promo_expires_at: e.target.value ? new Date(e.target.value).toISOString() : undefined } : null)}
+                                    />
+                                    <div className="flex items-center gap-2 mt-2 px-1">
+                                        <div className={`w-2 h-2 rounded-full ${platformSettings?.commission_promo_expires_at && new Date(platformSettings.commission_promo_expires_at) > new Date() ? 'bg-emerald-500 animate-pulse' : 'bg-slate-300'}`}></div>
+                                        <span className="text-[10px] font-bold text-slate-500">
+                                            Status Promo: {platformSettings?.commission_promo_expires_at && new Date(platformSettings.commission_promo_expires_at) > new Date() ? 'SEDANG AKTIF' : 'TIDAK AKTIF / EXPIRED'}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className="pt-6">
+                                    <button
+                                        onClick={async () => {
+                                            if (!platformSettings?.id) return;
+                                            try {
+                                                await db.platform_settings.update(platformSettings.id, {
+                                                    ...platformSettings,
+                                                    updated_at: new Date().toISOString()
+                                                });
+                                                alert('Pengaturan berhasil disimpan!');
+                                            } catch (err) {
+                                                alert('Gagal menyimpan pengaturan.');
+                                            }
+                                        }}
+                                        className="px-10 py-4 bg-slate-900 dark:bg-emerald-600 hover:bg-slate-800 dark:hover:bg-emerald-500 text-white font-black rounded-2xl transition-all shadow-xl active:scale-95"
+                                    >
+                                        Simpan Perubahan
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
     );
 };
+

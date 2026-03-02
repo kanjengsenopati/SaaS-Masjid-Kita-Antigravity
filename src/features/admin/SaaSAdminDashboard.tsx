@@ -212,46 +212,52 @@ export const SaaSAdminDashboard: React.FC = () => {
             </div>
 
             {/* Top Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-white dark:bg-slate-900 p-8 rounded-[32px] border border-slate-100 dark:border-slate-800 shadow-sm relative overflow-hidden group">
-                    <div className="absolute -right-6 -top-6 w-32 h-32 bg-emerald-50 dark:bg-emerald-900/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
-                    <div className="relative z-10">
-                        <div className="flex items-center justify-between mb-6">
-                            <div className="w-14 h-14 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center">
-                                <TrendingUp size={28} />
-                            </div>
-                            <span className="px-3 py-1 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 text-xs font-black uppercase tracking-widest rounded-full">Bulanan</span>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm relative overflow-hidden group">
+                    <div className="absolute -right-6 -top-6 w-24 h-24 bg-emerald-50 dark:bg-emerald-900/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
+                    <div className="relative z-10 flex items-center gap-4">
+                        <div className="w-12 h-12 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-xl flex items-center justify-center shrink-0">
+                            <TrendingUp size={24} />
                         </div>
-                        <div className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-2">Total Monthly Recurring Revenue (MRR)</div>
-                        <div className="text-2xl font-bold text-gray-900 dark:text-white">{formatCurrencyRp(currentMRR)}</div>
+                        <div className="flex-grow">
+                            <div className="flex items-baseline justify-between gap-2">
+                                <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Total MRR</div>
+                                <span className="px-2 py-0.5 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 text-[8px] font-black uppercase tracking-widest rounded-full">Bulanan</span>
+                            </div>
+                            <div className="text-xl font-bold text-gray-900 dark:text-white mt-0.5">{formatCurrencyRp(currentMRR)}</div>
+                        </div>
                     </div>
                 </div>
 
-                <div className="bg-white dark:bg-slate-900 p-8 rounded-[32px] border border-slate-100 dark:border-slate-800 shadow-sm relative overflow-hidden group">
-                    <div className="absolute -right-6 -top-6 w-32 h-32 bg-blue-50 dark:bg-blue-900/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
-                    <div className="relative z-10">
-                        <div className="flex items-center justify-between mb-6">
-                            <div className="w-14 h-14 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-2xl flex items-center justify-center">
-                                <Globe size={28} />
-                            </div>
-                            <span className="px-3 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-xs font-black uppercase tracking-widest rounded-full">Kumulatif</span>
+                <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm relative overflow-hidden group">
+                    <div className="absolute -right-6 -top-6 w-24 h-24 bg-blue-50 dark:bg-blue-900/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
+                    <div className="relative z-10 flex items-center gap-4">
+                        <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-xl flex items-center justify-center shrink-0">
+                            <Globe size={24} />
                         </div>
-                        <div className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-2">Total Mitra Masjid Aktif</div>
-                        <div className="text-2xl font-bold text-gray-900 dark:text-white">{tenants.length}</div>
+                        <div className="flex-grow">
+                            <div className="flex items-baseline justify-between gap-2">
+                                <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Mitra Masjid</div>
+                                <span className="px-2 py-0.5 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-[8px] font-black uppercase tracking-widest rounded-full">Kumulatif</span>
+                            </div>
+                            <div className="text-xl font-bold text-gray-900 dark:text-white mt-0.5">{tenants.length}</div>
+                        </div>
                     </div>
                 </div>
 
-                <div className="bg-white dark:bg-slate-900 p-8 rounded-[32px] border border-slate-100 dark:border-slate-800 shadow-sm relative overflow-hidden group">
-                    <div className="absolute -right-6 -top-6 w-32 h-32 bg-purple-50 dark:bg-purple-900/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
-                    <div className="relative z-10">
-                        <div className="flex items-center justify-between mb-6">
-                            <div className="w-14 h-14 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-2xl flex items-center justify-center">
-                                <Wallet size={28} />
-                            </div>
-                            <span className="px-3 py-1 bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 text-xs font-black uppercase tracking-widest rounded-full">Mitra</span>
+                <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm relative overflow-hidden group">
+                    <div className="absolute -right-6 -top-6 w-24 h-24 bg-purple-50 dark:bg-purple-900/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
+                    <div className="relative z-10 flex items-center gap-4">
+                        <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-xl flex items-center justify-center shrink-0">
+                            <Wallet size={24} />
                         </div>
-                        <div className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-2">Total Partner Afiliasi Aktif</div>
-                        <div className="text-2xl font-bold text-gray-900 dark:text-white">{affiliates.filter(a => a.status === 'ACTIVE').length}</div>
+                        <div className="flex-grow">
+                            <div className="flex items-baseline justify-between gap-2">
+                                <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Partner Afiliasi</div>
+                                <span className="px-2 py-0.5 bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 text-[8px] font-black uppercase tracking-widest rounded-full">Mitra</span>
+                            </div>
+                            <div className="text-xl font-bold text-gray-900 dark:text-white mt-0.5">{affiliates.filter(a => a.status === 'ACTIVE').length}</div>
+                        </div>
                     </div>
                 </div>
             </div>

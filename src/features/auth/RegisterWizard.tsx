@@ -88,7 +88,18 @@ export const RegisterWizard: React.FC = () => {
                     else if (planData.plan === 'ENTERPRISE') price = 1000000; // Simulated
 
                     if (price > 0) {
-                        const rate = affiliate.commission_rate || 10;
+                        // Determine applicable commission rate
+                        const settings = await db.platform_settings.toCollection().first();
+                        let rate = 10; // Hard fallback
+
+                        // Check Promo Rate first
+                        if (settings?.commission_promo_rate && settings?.commission_promo_expires_at && new Date(settings.commission_promo_expires_at) > new Date()) {
+                            rate = settings.commission_promo_rate;
+                        } else {
+                            // Fallback to Affiliate Specific Rate OR System Default
+                            rate = affiliate.commission_rate ?? (settings?.commission_rate_default || 10);
+                        }
+
                         const commissionAmount = (price * rate) / 100;
 
                         await db.commissions.add({

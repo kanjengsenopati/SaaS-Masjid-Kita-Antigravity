@@ -13,6 +13,9 @@ interface TenantContextProps {
 
 const TenantContext = createContext<TenantContextProps | undefined>(undefined);
 
+// Global lock for seeding to prevent React StrictMode race conditions
+let isSeeding = false;
+
 export const TenantProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [tenant, setTenant] = useState<ITenant | null>(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -56,9 +59,14 @@ export const TenantProvider: React.FC<{ children: React.ReactNode }> = ({ childr
                     const tenantCount = await tenantsTable.count();
                     const moduleCount = await modulesTable.count();
 
-                    if (tenantCount === 0 || moduleCount === 0) {
+                    if ((tenantCount === 0 || moduleCount === 0) && !isSeeding) {
+                        isSeeding = true;
                         console.log("Missing critical data on localhost, running seeder...");
-                        await seedDatabase();
+                        try {
+                            await seedDatabase();
+                        } finally {
+                            isSeeding = false;
+                        }
                         const res = await tenantService.getByHost(host);
                         activeTenant = res.data || null;
                     }

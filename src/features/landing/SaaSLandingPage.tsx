@@ -168,10 +168,13 @@ export const SaaSLandingPage: React.FC = () => {
             </nav>
 
             {/* Hero Section */}
-            <section className="relative pt-40 pb-32 lg:pt-56 lg:pb-48 overflow-hidden min-h-screen flex items-center justify-center bg-gradient-to-br from-[#064E3B] via-[#065F46] to-[#047857]">
+            <section className="relative pt-32 pb-24 lg:pt-40 lg:pb-32 overflow-hidden min-h-[85vh] flex items-center justify-center bg-slate-950">
+
+                {/* Modern Emerald Gradient Overlay with 50% Opacity */}
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-950 via-emerald-900 to-[#064E3B] opacity-50 z-0"></div>
 
                 {/* Islamic/Arabesque Background Pattern - Subtler */}
-                <div className="absolute inset-0 opacity-[0.07] pointer-events-none -z-10">
+                <div className="absolute inset-0 opacity-[0.05] pointer-events-none z-0">
                     <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
                         <defs>
                             <pattern id="arabesque_subtle" x="0" y="0" width="120" height="120" patternUnits="userSpaceOnUse">
@@ -185,36 +188,36 @@ export const SaaSLandingPage: React.FC = () => {
                 </div>
 
                 {/* Atmospheric Glows for Depth */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[500px] bg-emerald-400/10 blur-[150px] rounded-full -z-10"></div>
-                <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-teal-500/10 blur-[120px] rounded-full -z-10"></div>
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[400px] bg-emerald-400/10 blur-[150px] rounded-full z-0"></div>
+                <div className="absolute -bottom-24 -right-24 w-80 h-80 bg-teal-500/10 blur-[120px] rounded-full z-0"></div>
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-                    <div className="flex flex-col items-center text-center space-y-12 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+                    <div className="flex flex-col items-center text-center space-y-9 animate-in fade-in slide-in-from-bottom-8 duration-1000">
 
-                        <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 font-bold text-xs uppercase tracking-[0.2em] backdrop-blur-sm">
-                            <Zap size={14} fill="currentColor" className="animate-pulse" />
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 font-bold text-[10px] uppercase tracking-[0.2em] backdrop-blur-sm">
+                            <Zap size={12} fill="currentColor" className="animate-pulse" />
                             #1 Solusi Digital Manajemen Masjid
                         </div>
 
-                        <div className="space-y-6">
-                            <h1 className="text-6xl lg:text-8xl font-black tracking-tight leading-[1.1] text-white drop-shadow-2xl">
+                        <div className="space-y-5">
+                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-[1.1] text-white drop-shadow-2xl">
                                 Kelola Masjid Lebih <br />
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-teal-200">Amanah & Profesional</span>
                             </h1>
 
-                            <p className="text-xl lg:text-2xl text-emerald-50/80 max-w-3xl mx-auto leading-relaxed font-medium drop-shadow-lg">
+                            <p className="text-base lg:text-lg text-emerald-50/70 max-w-2xl mx-auto leading-relaxed font-medium drop-shadow-lg">
                                 <strong>MASJIDKITA</strong> menghadirkan platform SaaS terpadu untuk manajemen keuangan, database jamaah, dan publikasi kegiatan masjid dalam satu dashboard yang elegan.
                             </p>
                         </div>
 
-                        <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-6 w-full sm:w-auto">
+                        <div className="flex flex-col sm:flex-row items-center justify-center gap-5 pt-4 w-full sm:w-auto">
                             <button
                                 onClick={() => navigate('/register')}
-                                className="w-full sm:w-auto px-12 py-5 bg-emerald-500 hover:bg-emerald-400 text-[#064E3B] rounded-2xl font-black text-xl shadow-[0_20px_50px_rgba(16,185,129,0.3)] transition-all hover:scale-105 active:scale-95"
+                                className="w-full sm:w-auto px-10 py-4 bg-emerald-500 hover:bg-emerald-400 text-[#064E3B] rounded-2xl font-black text-lg shadow-[0_15px_40px_rgba(16,185,129,0.3)] transition-all hover:scale-105 active:scale-95"
                             >
                                 Mulai Sekarang &rarr;
                             </button>
-                            <button className="w-full sm:w-auto px-12 py-5 bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-2xl font-bold text-lg backdrop-blur-md transition-all">
+                            <button className="w-full sm:w-auto px-10 py-4 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-2xl font-bold text-base backdrop-blur-md transition-all">
                                 Lihat Demo
                             </button>
                         </div>

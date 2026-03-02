@@ -141,19 +141,19 @@ export const SaaSAdminPanel: React.FC = () => {
                 {/* Stats Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                     {[
-                        { label: 'Total Masjid', value: tenants.length, icon: <Globe className="text-blue-500" />, color: 'blue' },
-                        { label: 'Paket Pro', value: tenants.filter(t => t.plan === 'PRO').length, icon: <CheckCircle2 className="text-emerald-500" />, color: 'emerald' },
-                        { label: 'Paket Enterprise', value: tenants.filter(t => t.plan === 'ENTERPRISE').length, icon: <Users className="text-purple-500" />, color: 'purple' },
-                        { label: 'Akan Berakhir', value: 0, icon: <AlertCircle className="text-amber-500" />, color: 'amber' },
+                        { label: 'Total Masjid', value: tenants.length, icon: <Globe className="text-blue-500" size={24} />, color: 'blue' },
+                        { label: 'Paket Pro', value: tenants.filter(t => t.plan === 'PRO').length, icon: <CheckCircle2 className="text-emerald-500" size={24} />, color: 'emerald' },
+                        { label: 'Paket Enterprise', value: tenants.filter(t => t.plan === 'ENTERPRISE').length, icon: <Users className="text-purple-500" size={24} />, color: 'purple' },
+                        { label: 'Akan Berakhir', value: 0, icon: <AlertCircle className="text-amber-500" size={24} />, color: 'amber' },
                     ].map((stat, i) => (
-                        <div key={i} className="bg-white dark:bg-slate-900 p-6 rounded-[32px] border border-slate-100 dark:border-slate-800 shadow-sm">
-                            <div className="flex items-center justify-between mb-4">
-                                <div className={`w-12 h-12 bg-${stat.color}-50 dark:bg-${stat.color}-900/20 rounded-2xl flex items-center justify-center`}>
-                                    {stat.icon}
-                                </div>
-                                <span className="text-2xl font-black">{stat.value}</span>
+                        <div key={i} className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm flex items-center gap-4">
+                            <div className={`w-12 h-12 bg-${stat.color}-50 dark:bg-${stat.color}-900/20 rounded-xl flex items-center justify-center shrink-0`}>
+                                {stat.icon}
                             </div>
-                            <div className="text-sm font-bold text-slate-500 uppercase tracking-widest">{stat.label}</div>
+                            <div>
+                                <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-tight mb-1">{stat.label}</div>
+                                <div className="text-xl font-black text-slate-900 dark:text-white leading-none">{stat.value}</div>
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -266,7 +266,14 @@ export const SaaSAdminPanel: React.FC = () => {
                                                                 // Pick random affiliate
                                                                 const randomAff = activeAffiliates[Math.floor(Math.random() * activeAffiliates.length)];
                                                                 const basePrice = platformSettings?.pro_plan_price || 150000;
-                                                                const commRate = randomAff.commission_rate || platformSettings?.commission_rate_default || 10;
+
+                                                                let commRate = 10;
+                                                                if (platformSettings?.commission_promo_rate && platformSettings?.commission_promo_expires_at && new Date(platformSettings.commission_promo_expires_at) > new Date()) {
+                                                                    commRate = platformSettings.commission_promo_rate;
+                                                                } else {
+                                                                    commRate = randomAff.commission_rate ?? (platformSettings?.commission_rate_default || 10);
+                                                                }
+
                                                                 const mockAmount = basePrice * (commRate / 100);
 
                                                                 // Create Subscription
@@ -283,7 +290,7 @@ export const SaaSAdminPanel: React.FC = () => {
                                                                 await db.commissions.add({
                                                                     affiliate_id: randomAff.id!,
                                                                     tenant_id: t.id!,
-                                                                    subscription_id: subId,
+                                                                    subscription_id: subId as number,
                                                                     amount: mockAmount,
                                                                     status: 'PENDING',
                                                                     created_at: new Date().toISOString()
@@ -301,28 +308,6 @@ export const SaaSAdminPanel: React.FC = () => {
 
                                                                 alert(`Simulasi berhasil! Komisi Rp ${mockAmount.toLocaleString('id-ID')} dicatat untuk Partner ${randomAff.referral_code}`);
                                                                 loadTenants();
-
-                                                                await db.commissions.add({
-                                                                    affiliate_id: randomAff.id!,
-                                                                    tenant_id: t.id!,
-                                                                    subscription_id: 0, // FIXED DUPLICATE REMOVAL SOON
-                                                                    amount: mockAmount,
-                                                                    status: 'PENDING',
-                                                                    created_at: new Date().toISOString()
-                                                                });
-
-                                                                // Update affiliate balance implicitly? No, balance is updated only upon Payout or Paid. Wait, standard affiliate systems accrue 'Unpaid/Pending' balance? 
-                                                                // Here we just insert the commission. AffiliateDashboard calculates unpaid dynamically from PENDING commissions.
-                                                                // Affiliate balance usually tracks how much they have *available* to withdraw (from PAID actions).
-                                                                // Or if it's updated on payout, then balance = accumulated unpaid.
-                                                                // Per user requirements, balancing might just be the actual 'available' money. Let's add it to balance straight away to match dashboard assumptions, or wait for payout?
-                                                                // In AffiliateDashboard, `aff.balance` is assumed to be withdrawable. Let's add it to balance when "Approved" by tenant payment, but here we just simulate "Tenant Paid" so we add it to balance and mark PENDING.
-
-                                                                // END DUPLICATE REMOVAL
-
-                                                                await logActivity('Simulate Referral', randomAff.id!, `Simulated commission ${mockAmount} for tenant ${t.id}`);
-
-                                                                alert(`Simulasi berhasil! Komisi Rp ${mockAmount.toLocaleString('id-ID')} dicatat untuk Partner ${randomAff.referral_code}`);
                                                             } catch (err) {
                                                                 alert("Gagal memproses simulasi.");
                                                             }
